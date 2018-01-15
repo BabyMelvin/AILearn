@@ -110,3 +110,62 @@ layer_input1 = tf.constant([
 kernel1 = [batch_size1, input_height1, input_width1, input_channels1]
 max_pool1 = tf.nn.avg_pool(layer_input1, kernel1, [1, 1, 1, 1], "VALID")
 print(sess.run(max_pool1))
+
+# 归一化
+# 归一化非CNN所独有。ReLU是无界函数，利用某些形式归一化识别那些高频特征十分有用的。
+# tf.nn.local_normalization(tf.nn.lm)
+# 局部响应归一化是一个依据求和操作而形输出函数。在某个给定向量中，每个分量都被depth_radius覆盖的输入的加权和所除。
+# 归一化目标之一将输入保持在一个可接受的范围内。如[0,1]
+# 创建一组浮点数值
+layer_input2 = tf.constant([
+    [[[1.]], [[2.]], [[3.]]]
+])
+lrn = tf.nn.local_response_normalization(layer_input2)
+print(sess.run([layer_input, lrn]))
+
+# 高级层
+"""
+    为使标准层定在创建时简单，TensorFlow引入一些高级网络层。
+    这些曾不是必须的，有助于减少代码冗余，遵循最佳实践
+"""
+# 1.tf.contrib.layer.convolution2d
+# 类似tf.nn.con2d逻辑相同，包含权值初始化，偏置初始化，可训练变量输出，偏置相加以及添加激活函数的功能。
+# CNN目标是训练卷积核
+# 权值初始化用于卷积核首次运行时填充，tf.truncated_normal
+# 其余与之前类似
+image_input = tf.constant([
+    [
+        [[0., 0., 0.], [255, 255., 255.], [254., 0., 0.]],
+        [[0., 191., 0.], [3., 108., 233.], [0., 191., 0.]],
+        [[254., 0., 0.], [255., 255., 255.], [0., 0., 0.]]
+    ]
+])
+conv2d = tf.contrib.layers.convolution2d(
+    image_input,
+    num_outputs=4,
+    kernel_size=(1, 1),  # 仅有录波器高度和宽度
+    activation_fn=tf.nn.relu,
+    stride=(1, 1),  # 对image_batch和input_channels跨度值
+    trainable=True
+)
+# 有必要对在convolution2d的设置中所使用的变量初始化
+sess.run(tf.global_variables_initializer())
+print(sess.run(conv2d))
+
+# 2.tf.contrib.layers.fully_connected
+# 全连接层，每个输入与每个输出都存在连接。CNN最后一层通常为全连层。
+# TensorFlow全连层格式tf.matmul(features,weight)+bias
+# feature，weight和bias均为张量。
+features = tf.constant([
+    [[1.2], [3.4]]
+])
+fc = tf.contrib.layers.fully_connected(features,
+                                       num_outputs=2)
+sess.run(tf.global_variables_initializer())
+print(sess.run(fc))
+
+# 输入层
+"""
+    无论是训练还是测试，原始输入都是需要传递给输入层。
+对目标识别与分类，输入层为tf.nn.conv2d，负责接收图像。
+"""
