@@ -111,7 +111,7 @@ adjust_contract = tf.image.adjust_contrast(image, -.5)
 gray = tf.image.rgb_to_grayscale(image)
 
 # 饱和度，很常见。增加饱和度突出颜色变化
-adjust_saturation = tf.image.adjust_saturation(imag, 0.4)
+adjust_saturation = tf.image.adjust_saturation(image, 0.4)
 with tf.Session() as sess:
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(coord=coord)

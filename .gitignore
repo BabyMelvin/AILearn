@@ -1,2 +1,4 @@
 .idea
 venv/
+machineLearn/imagenet-dogs/
+machineLearn/output/

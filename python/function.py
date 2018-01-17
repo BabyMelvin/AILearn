@@ -156,6 +156,7 @@ def make_increment(n):
     return lambda x: x + n
 
 
+# make_increment返回函数地址(lambda)
 f = make_increment(42)
 f(0)  # 42
 f(1)  # 43
