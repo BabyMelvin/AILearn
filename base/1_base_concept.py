@@ -51,7 +51,7 @@ init = tf.global_variables_initializer()
 sess.run(init)
 print(sess.run(linear_model, {x: [1, 2, 3, 4]}))
 
-# loss function,x as the model outputs,y placeholder as desire values.
+# loss 07-function,x as the model outputs,y placeholder as desire values.
 y = tf.placeholder(tf.float32)
 squared_deltas = tf.square(linear_model - y)
 loss = tf.reduce_sum(squared_deltas)

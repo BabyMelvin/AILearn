@@ -24,7 +24,7 @@ testing_dataset = defaultdict(list)
 
 # 将文件名分解为品种和相应文件名，品种对应于文件夹名称
 # help('map')
-# map(function, sequence[, sequence, ...]) -> list
+# map(07-function, sequence[, sequence, ...]) -> list
 image_filename_with_breed = map(lambda filename: (filename.split("\\")[2], filename), image_filenames)
 
 # 依据品种(上述返回元组的第0个分量)对图像分组

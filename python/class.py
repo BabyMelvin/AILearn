@@ -53,7 +53,7 @@ In global scope: global spam
 
 # 类
 class MyClass:
-    """a simple example class"""
+    """a simple example 08-class"""
     i = 12345
 
     def __init__(self):
@@ -85,7 +85,7 @@ while True:
 # 类和实例变量
 # 实例变量用于每一个实例嗾使唯一的数据,类变量用于类的所有实例共享的属性和方法
 class Dog:
-    # class variant,shared by all instances
+    # 08-class variant,shared by all instances
     tricks = []
     kind = 'canine'
 

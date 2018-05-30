@@ -8,7 +8,7 @@
 """
 
 
-# 1.python除了def/class/lambda外，其他如：/if/elif/else/except for/while并不能改变其作用域if elif else中定义，外部还是可以问访问的(和java不同)。
+# 1.python除了def/08-class/lambda外，其他如：/if/elif/else/except for/while并不能改变其作用域if elif else中定义，外部还是可以问访问的(和java不同)。
 def hello():
     if True:
         a = 12
@@ -21,7 +21,7 @@ hello()
 # 局部变量外部无法访问
 # print(b)  NameError: name 'b' is not defined
 
-# 2.def/class/lambda内进行赋值，变成了其局部作用域.
+# 2.def/08-class/lambda内进行赋值，变成了其局部作用域.
 # 局部作用域会覆盖全局作用域，但是不影响全局作用域
 g = 1  # 全局的
 
@@ -151,7 +151,7 @@ print(f2())
 
 
 # just a string
-# <type 'function'>
+# <type '07-function'>
 
 # 2.如果使用Python的Web框架，把一个视图函数很多局部变量传递给引擎，然后作用在HTML上。
 # 将locals()局部变量都打包一起扔出去

@@ -21,7 +21,7 @@ estimator = tf.estimator.LinearRegressor(feature_columns=feature_columns)
 
 # TensorFlow provides many helper method to read and set up data sets.
 # here we use two data sets:one for training and one for evaluation
-# we have to tell the function how many batched of data(num_epochs多少次) and how big data batch (每次多长)should be
+# we have to tell the 07-function how many batched of data(num_epochs多少次) and how big data batch (每次多长)should be
 x_train = np.array([1., 2., 3., 4.])
 y_train = np.array([0., -1., -2., -3.])
 x_eval = np.array([2., 5., 8., 1.])

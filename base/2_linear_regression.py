@@ -2,7 +2,7 @@ import tensorflow as tf
 
 """
     linear regression model:线性回归模型
-    optimizers: slowly change each variable to minimize the loss function
+    optimizers: slowly change each variable to minimize the loss 07-function
     simplest optimizer:gradient descent(梯度下降)
         gradient descent:
                 modify each variable accord to the magnitude of the derivative(导数大小) of the loss with respect to that variable
