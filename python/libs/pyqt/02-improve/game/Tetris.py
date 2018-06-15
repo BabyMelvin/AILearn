@@ -22,6 +22,7 @@ class Tetris(QMainWindow):
         self.tboard = Board(self)
         self.setCentralWidget(self.tboard)
         self.statusbar = self.statusBar()
+        # 三种信息：消除行数，游戏暂停状态，或者游戏结束状态
         self.tboard.msg2Statusbar[str].connect(self.statusBar().showMessage)
         self.tboard.start()
         self.resize(180, 380)
@@ -31,7 +32,7 @@ class Tetris(QMainWindow):
 
     def center(self):
         '''centers the window on the screen'''
-        screen = QDesktopWidget.screenGeometry()
+        screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) / 2,
                   (screen.height() - size.height()) / 2)
@@ -61,21 +62,23 @@ class Board(QFrame):
         self.isPaused = False
         self.clearBoard()
 
+    # 决定board方块的种类
     def shapeAt(self, x, y):
         '''determines shape at the board postion'''
         return self.board[(y * Board.BoardWidth) + x]
 
     def setShapeAt(self, x, y, shape):
         '''set a shape at the board'''
-        self.board[(y * Board.BoardWidth)] = shape
+        self.board[(y * Board.BoardWidth) + x] = shape
 
+    # board大小可以动态改变，方个大小也要随之改变,返回占用多少像素
     def squareWidth(self):
         '''returns the width of one square'''
         return self.contentsRect().width() // Board.BoardWidth
 
     def squareHeight(self):
         '''return the height of one square'''
-        return self.contentRect().height() // Board.BoardHeight
+        return self.contentsRect().height() // Board.BoardHeight
 
     def start(self):
         '''start game'''
@@ -103,9 +106,12 @@ class Board(QFrame):
             self.msg2Statusbar.emit(str(self.numLinesRemoved))
         self.update()
 
+    # 渲染这里发生的
+    # 第一步画出所有已落的图
     def paintEvent(self, event):
         '''paints all shape of the game'''
         painter = QPainter(self)
+        painter.begin(self)
         rect = self.contentsRect()
         boardTop = rect.bottom() - Board.BoardHeight * self.squareHeight()
         for i in range(Board.BoardHeight):
@@ -122,7 +128,8 @@ class Board(QFrame):
                 y = self.curY + self.curPiece.y(i)
                 self.drawSquare(painter, rect.left() + x * self.squareWidth(),
                                 boardTop + (Board.BoardHeight - y - 1) * self.squareHeight(), self.curPiece.shape())
-                self.curPiece.shape()
+
+        painter.end()
 
     def keyPressEvent(self, event):
         '''presses key press events'''
@@ -138,6 +145,8 @@ class Board(QFrame):
         elif key == Qt.Key_Left:
             self.tryMove(self.curPiece, self.curX - 1, self.curY)
         elif key == Qt.Key_Right:
+            self.tryMove(self.curPiece.rotateRight(), self.curX + 1, self.curY)
+        elif key == Qt.Key_Down:
             self.tryMove(self.curPiece.rotateRight(), self.curX, self.curY)
         elif key == Qt.Key_Up:
             self.tryMove(self.curPiece.rotateLeft(), self.curX, self.curY)
@@ -197,8 +206,8 @@ class Board(QFrame):
             for j in range(Board.BoardWidth):
                 if not self.shapeAt(j, i) == Tetrominoe.NoShape:
                     n = n + 1
-                if n == 10:
-                    rowsToRemove.append(i)
+            if n == 10:
+                rowsToRemove.append(i)
 
         rowsToRemove.reverse()
         for m in rowsToRemove:
@@ -270,11 +279,11 @@ class Tetrominoe(object):
 class Shape(object):
     coordsTable = (
         ((0, 0), (0, 0), (0, 0), (0, 0)),
-        ((0, -1), (0, 0), (-1, 0), (-1, 1)),
-        ((0, -1), (0, 0), (1, 0), (1, 1)),
-        ((0, -1), (0, 0), (0, 1), (0, 2)),
-        ((-1, 0), (0, 0), (1, 0), (0, 1)),
-        ((0, 0), (1, 0), (0, 1), (1, 1)),
+        ((0, -1), (0, 0), (-1, 0), (-1, 1)),  # z
+        ((0, -1), (0, 0), (1, 0), (1, 1)),  # Square
+        ((0, -1), (0, 0), (0, 1), (0, 2)),  # L
+        ((-1, 0), (0, 0), (1, 0), (0, 1)),  # T
+        ((0, 0), (1, 0), (0, 1), (1, 1)),  #
         ((-1, -1), (0, -1), (0, 0), (0, 1)),
         ((1, -1), (0, -1), (0, 0), (0, 1)),
     )
@@ -290,7 +299,8 @@ class Shape(object):
 
     def setShape(self, shape):
         '''set a shape'''
-        table = Shape.coordsTable
+        table = Shape.coordsTable[shape]
+
         for i in range(4):
             for j in range(2):
                 self.coords[i][j] = table[i][j]
@@ -327,7 +337,7 @@ class Shape(object):
         ''' return max x value'''
         m = self.coords[0][0]
         for i in range(4):
-            m = max((m, self.coords[i][0]))
+            m = max(m, self.coords[i][0])
         return m
 
     def minY(self):
@@ -350,6 +360,7 @@ class Shape(object):
         if self.pieceShape == Tetrominoe.SquareShape:
             return self
         result = Shape()
+        result.pieceShape = self.pieceShape
         for i in range(4):
             result.setX(i, self.y(i))
             result.setY(i, -self.x(i))
