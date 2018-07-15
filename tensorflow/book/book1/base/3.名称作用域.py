@@ -1,23 +1,18 @@
 import tensorflow as tf
 
-"""
-    名称作用域将Op划分为一些较大的，有名称的语句块
-"""
-with tf.name_scope("scope_A"):
-    a = tf.add(1, 2, name="A_add")
-    b = tf.multiply(a, 3, name="A_mul")
 
-with tf.name_scope("scope_B"):
-    c = tf.add(4, 5, name="B_add")
-    d = tf.multiply(c, 6, name="B_mul")
+def name_scope():
+    # 名称作用域将Op划分为一些较大的，有名称的语句块
+    with tf.name_scope("scope_A"):
+        a = tf.add(1, 2, name="A_add")
+        b = tf.multiply(a, 3, name="A_mul")
 
-e = tf.add(b, d, name="Output")
+    with tf.name_scope("scope_B"):
+        c = tf.add(4, 5, name="B_add")
+        d = tf.multiply(c, 6, name="B_mul")
 
-sess = tf.Session()
-print(sess.run(e))
-# tensorboard --logdir C:\Users\dell\PycharmProjects\tensorflow\my_graph
-writer = tf.summary.FileWriter('C:\\Users\\dell\\PycharmProjects\\tensorflow\\my_graph', tf.get_default_graph())
-writer.close()
+    e = tf.add(b, d, name="Output")
+
 
 """
     可以将名称作用域嵌入在其他名称作用域内
