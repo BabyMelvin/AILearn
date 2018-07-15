@@ -2,3 +2,5 @@
 venv/
 machineLearn/imagenet-dogs/
 machineLearn/output/
+*.pyc
+__pycache__
