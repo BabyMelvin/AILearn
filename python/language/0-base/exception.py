@@ -66,7 +66,7 @@ except MyError as e:
 
 
 class Error(Exception):
-    """base 08-class for exception in this module"""
+    """google 08-class for exception in this module"""
     pass
 
 
