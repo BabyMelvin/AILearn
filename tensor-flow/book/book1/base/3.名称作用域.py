@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 
 def name_scope():
@@ -12,17 +13,23 @@ def name_scope():
         d = tf.multiply(c, 6, name="B_mul")
 
     e = tf.add(b, d, name="Output")
+    sess = tf.Session()
+    sess.run(e)
+    writer = tf.summary.FileWriter("../my_graph", graph=tf.get_default_graph())
+    writer.close()
 
 
-"""
-    可以将名称作用域嵌入在其他名称作用域内
-"""
+name_scope()
 
-graph = tf.Graph()
-with graph.as_default():
-    in_1 = tf.placeholder(tf.float32, shape=[], name="input_a")
-    in_2 = tf.placeholder(tf.float32, shape=[], name="input_b")
-    const = tf.constant(3, dtype=tf.float32, name="static_value")
+
+def name_scope2():
+    # 可以将名称作用域嵌入在其他名称作用域内
+
+    graph = tf.Graph()
+    with graph.as_default():
+        in_1 = tf.placeholder(tf.float32, shape=[], name="input_a")
+        in_2 = tf.placeholder(tf.float32, shape=[], name="input_b")
+        const = tf.constant(3, dtype=tf.float32, name="static_value")
     with tf.name_scope("Transformation"):
         with tf.name_scope("A"):
             A_mul = tf.multiply(in_1, const)
@@ -37,5 +44,17 @@ with graph.as_default():
             D_div = tf.div(B_out, A_out)
             D_out = tf.add(D_div, const)
             out = tf.maximum(C_out, D_out)
-        writer = tf.summary.FileWriter('C:\\Users\\dell\\PycharmProjects\\tensorflow\\my_graph', graph=graph)
+        writer = tf.summary.FileWriter("../my_graph", graph=graph)
         writer.close()
+
+
+
+
+def build_data_flow_image():
+    graph = tf.Graph()
+    with graph.as_default():
+        with tf.name_scope("variables"):
+            # 记录数据流运行次数的Variable
+            pass
+
+
