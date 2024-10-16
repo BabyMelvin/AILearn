@@ -48,6 +48,23 @@ def softmax(a):
 
     return y
 
+#################  损失函数  #######################
+# 均方误差
+def mean_squared_error(y, t):
+    return 0.5 * np.sum((y - t) ** 2)
+
+
+# 交叉熵误差
+def cross_entropy_error(y, t):
+    delta = 1e-7
+    return -np.sum(t * np.log(y + delta))
+
+########### 数值微分 ####################
+# 数值微分
+def numerical_diff(f, x):
+    h = 1e-4
+    return (f(x + h) - f(x-h)) / (2 * h)
+
 network = init_network()
 x = np.array([1.0, 0.5])
 y = forward(network, x)

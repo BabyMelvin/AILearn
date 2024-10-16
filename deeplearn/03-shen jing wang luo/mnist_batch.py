@@ -30,7 +30,7 @@ def init_network():
         network = pickle.load(f)
 
     return network
-给i他
+
 # predict() 函数以 NumPy 数 组的形式输出各个标签对应的概率。比如输出 [0.1, 0.3, 0.2, ..., 0.04] 的 数组，
 # 该数组表示“0”的概率为 0.1，“ 1”的概率为 0.3，等等。
 def predict(network, x):
