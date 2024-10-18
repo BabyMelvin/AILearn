@@ -242,7 +242,7 @@ print(square.calculate_area())
 
 
 # 静态方法
-# 静态方法和类方法类似，除了不接受额外参数。想普通方法属于类的。
+# 静态方法和类方法类似，除了不接受额外参数。像普通方法属于类的。
 class Pizza:
     def __init__(self, toppings):
         self.toppings = toppings
@@ -261,7 +261,7 @@ if all(Pizza.validate_topping(i) for i in ingredients):
 
 
 # 属性 控制用户定制实例特性
-# 是某个属性成只读的
+# 使某个属性成只读的
 class Pizza0:
     def __init__(self, toppings):
         self.toppings = toppings
