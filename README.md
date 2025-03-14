@@ -18,3 +18,12 @@
 * <a herf="https://github.com/tensorflow/models">官方发布的用TensorFlow实现的机器学习模型</a>
 * <a herf="https://www.kaggle.com">Kaggle</a>：取公开数据集并与其他从事数据分析工作的人开展竞赛的绝佳网站
 * <a herf="https://www.data.gov/">Data.gov</a>美国政府的门户网站， 从中可找到全美国的公开数据集。
+
+
+### 3. 深度学习 (coming soon)
+
+[深度学习+pyTorch](https://tangshusen.me/Dive-into-DL-PyTorch/#/)
+
+
+https://pytorch.apachecn.org/
+https://livebook.manning.com/book/deep-learning-with-pytorch-second-edition/welcome/v-8/
